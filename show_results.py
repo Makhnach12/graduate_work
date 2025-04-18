@@ -6,6 +6,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 
+from confident_learning_method import predict_confident_learning
 from svm_model import predict_svm
 from torch_model import predict_torch
 
@@ -38,4 +39,4 @@ def get_results(method: Callable) -> None:
 
 
 if __name__ == '__main__':
-    get_results(predict_svm)
+    get_results(predict_confident_learning)
