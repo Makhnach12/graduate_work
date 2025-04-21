@@ -5,7 +5,7 @@ import pandas as pd
 from pandas import DataFrame
 from sklearn.svm import SVC
 
-TRAIN_DATA_PATH: str = 'data/exp2/data_part1'
+TRAIN_DATA_PATH: str = 'data/exp3/data_part1'
 WEIGHT_NULL_CLASS: int = 1
 WEIGHT_FIRST_CLASS: int = 100
 
@@ -28,5 +28,5 @@ if __name__ == '__main__':
         class_weight={0: WEIGHT_NULL_CLASS, 1: WEIGHT_FIRST_CLASS}
     )
     clf.fit(X, y)
-    with open('models/exp2/model_svm.pkl', 'wb') as f:
+    with open('models/exp3/model_svm.pkl', 'wb') as f:
         pickle.dump(clf, f)
