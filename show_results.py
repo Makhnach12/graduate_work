@@ -10,18 +10,20 @@ from confident_learning_method import predict_confident_learning
 from svm_model import predict_svm
 from torch_model import predict_torch
 
-DIRECTORY: str = 'data/'
-NAMES: list[str] = ['data51.csv', 'data54.csv', 'data_part1.csv']
+DIRECTORY: str = 'data/exp2/'
+NAMES: list[str] = ['data51', 'data54', 'data_part1']
 
 
 def get_results(method: Callable) -> None:
     for name in NAMES:
         data = pd.read_csv(DIRECTORY + name)
 
-        X = data[['dis', 'iou', 'conf', 'dx1', 'dy1', 'dx2', 'dy2']]
+        columns_to_keep = [col for col in data.columns if
+                           col not in ['frame', 'problem']]
+        X = data[columns_to_keep]
         y = data['problem'].values
 
-        y_prediction: np.array = method(X)
+        y_prediction: np.array = method(X, exp='exp2', input_size=len(columns_to_keep))
 
         cm = confusion_matrix(y, y_prediction)
 
@@ -39,4 +41,4 @@ def get_results(method: Callable) -> None:
 
 
 if __name__ == '__main__':
-    get_results(predict_confident_learning)
+    get_results(predict_torch)

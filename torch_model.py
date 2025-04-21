@@ -5,9 +5,9 @@ from torch import nn
 
 
 class Classifier(nn.Module):
-    def __init__(self, output_bias=None):
+    def __init__(self, input_size: int, output_bias=None):
         super(Classifier, self).__init__()
-        self.dense1 = nn.Linear(7, 20)
+        self.dense1 = nn.Linear(input_size, 20)
         self.dropout = nn.Dropout(0.5)
         self.output = nn.Linear(20, 2)
 
@@ -23,9 +23,9 @@ class Classifier(nn.Module):
         return x
 
 
-def predict_torch(X: DataFrame) -> np.array:
-    model = Classifier()
-    model.load_state_dict(torch.load('models/model_weights.pth'))
+def predict_torch(X: DataFrame, exp: str, input_size: int = 7) -> np.array:
+    model = Classifier(input_size)
+    model.load_state_dict(torch.load(f'models/{exp}/model_weights.pth'))
     model.eval()
     X_tensor = torch.from_numpy(X.values).float()
     with torch.no_grad():
